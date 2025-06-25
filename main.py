@@ -16,3 +16,5 @@ def is_prime(n):
     return True
 
 print("This is my first github-tracked project ever")
+
+print("Git test successful")
