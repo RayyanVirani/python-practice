@@ -2,26 +2,26 @@
 
 import random
 import requests
+import string
 
-Alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-letters = []
 score = 0
+total_score = 0
 
 def generate_letters():
-    while len(letters) != 7:
-        random_letter = random.choice(Alphabet)
-        if random_letter != letters:
-            letters.append(random_letter.upper())
+    global letters
+    letters = []
+    letters = random.sample(string.ascii_uppercase, 7)
     print("Here is your list")
     print(letters)
 
 def word_valid2(word):
-    lower_word = word.lower()
-    if len(lower_word) > 7:
+    global letters
+    upper_word = word.upper()
+    if len(upper_word) > 7:
         return False
-    if len(word) != len(set(lower_word)):
+    if len(word) != len(set(upper_word)):
         return False
-    for letter in lower_word:
+    for letter in upper_word:
         if letter not in letters:
             return False
     return True
@@ -36,7 +36,10 @@ def is_valid_word(word):
         return False
     
 def calculate_score(word):
+    global score
+    global total_score
     score = len(word) * 10
+    total_score = total_score + score
     
 
 print("Welcome to your Word Quiz game." + "\n")
@@ -48,22 +51,34 @@ print("lets start")
 
 generate_letters()
 
-while True:
+shit = True
+while shit == True:
     user_word = str(input("Enter your word: "))
     if user_word == "_end_":
-        break
+        shit = False
     if (is_valid_word(user_word) == True) and (word_valid2(user_word) == True):
         calculate_score(user_word)
         print("That is a correct word.")
-        print(f"Your correct score is {score}")
+        print(f"Your current score is {total_score}")
     else:
         print("Invalid word. Try again")
-    print("Type continue if you have more words or type next for a new set of letters.")
-    user_choice = input("Your choice:")
-    if user_choice.lower() == "next":
-        generate_letters()
-    elif user_choice == "_end_":
-        break
+    while True:
+        try:
+            print("Type continue if you have more words or type next for a" + "\n " +"new set of letters.")
+            user_choice = input("Your choice: ")
+            if user_choice.lower() == "next":
+                generate_letters()
+                break
+            elif user_choice == "_end_":
+                shit = False
+                break
+            elif user_choice == "continue":
+                shit = True
+                break
+            else:
+                print("Invalid choice, Try again")
+        except ValueError:
+            print("Enter either continue, next or _end_")
 
 print(f"This is your final score {score}")
 print("Thanks for playing, see you next time.")
