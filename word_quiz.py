@@ -8,7 +8,9 @@ score = 0
 total_score = 0
 
 def generate_letters():
+    global used_words
     global letters
+    used_words = []
     letters = []
     letters = random.sample(string.ascii_uppercase, 7)
     print("Here is your list")
@@ -56,10 +58,11 @@ while shit == True:
     user_word = str(input("Enter your word: "))
     if user_word == "_end_":
         shit = False
-    if (is_valid_word(user_word) == True) and (word_valid2(user_word) == True):
+    if (is_valid_word(user_word) == True) and (word_valid2(user_word) == True) and (user_word not in used_words):
         calculate_score(user_word)
         print("That is a correct word.")
         print(f"Your current score is {total_score}")
+        used_words.append(user_word)
     else:
         print("Invalid word. Try again")
     while True:
@@ -80,5 +83,5 @@ while shit == True:
         except ValueError:
             print("Enter either continue, next or _end_")
 
-print(f"This is your final score {score}")
+print(f"This is your final score {total_score}")
 print("Thanks for playing, see you next time.")
