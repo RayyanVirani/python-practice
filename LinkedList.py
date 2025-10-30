@@ -13,12 +13,6 @@ def InitializeList():
     nullpointer, startpointer = -1, -1
     freepointer, currentpointer = 0, 0
 
-"""InitializeList()
-temp = input()
-num = input()
-MainList[currentpointer] = LinkedList(temp, num)
-print(MainList[0].data , MainList[0].pointer)"""
-
 def insert(dataitem):
     global startpointer, nullpointer, freepointer, currentpointer
     if freepointer < len(MainList):
@@ -46,6 +40,7 @@ def view():
         while currentpointer != nullpointer:
             print(f"Data: {MainList[currentpointer].data} , Pointer: {MainList[currentpointer].pointer}")
             currentpointer = MainList[currentpointer].pointer
+
 InitializeList()
 for i in range(5):
     temp = input("Enter first Data: ")
