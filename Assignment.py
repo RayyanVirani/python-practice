@@ -30,7 +30,7 @@ XY_scaled = scaler_XY.fit_transform(np.column_stack((x, y)))
 scaler_Z = MinMaxScaler(feature_range=(-1, 1))
 Z_scaled = scaler_Z.fit_transform(z.reshape(-1, 1)).flatten()
 
-# ===== Quantum parameters =====
+# Quantum Parameters
 param_x = Parameter("x")  # Feature 1
 param_y = Parameter("y")  # Feature 2
 
@@ -52,13 +52,13 @@ ansatz.cx(0, 1)
 # QNN Circuit
 qnn_circuit = QNNCircuit(feature_map=feature_map, ansatz=ansatz)
 
-# ===== Callback for optimization graph =====
+# Callback for Optimization
 objective_func_vals = []
 
 def callback_graph(weights, obj_func_eval):
     objective_func_vals.append(obj_func_eval)
 
-# ===== Train Quantum Regressor =====
+# Training Regressor
 regressor = VQR(
     feature_map=feature_map,
     ansatz=ansatz,
@@ -67,10 +67,10 @@ regressor = VQR(
 )
 
 regressor.fit(XY_scaled, Z_scaled)
-# ===== Predictions =====
+# Predictions
 Z_pred = regressor.predict(XY_scaled)
 
-# ===== Plot in 3D =====
+# Plot Display
 plt.figure(figsize=(6,4))
 plt.plot(range(len(objective_func_vals)), objective_func_vals, 'b-')
 plt.title("Objective function value against iteration")
